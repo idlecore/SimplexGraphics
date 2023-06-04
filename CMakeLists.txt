@@ -10,9 +10,20 @@ project(
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(GLOBAL PROPERTY CXX_STANDARD 17)
 
+
+# GLFW stuff
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+
+add_subdirectory(lib/glfw)
+add_subdirectory(lib/glad)
+
 add_library(
     ${PROJECT_NAME} SHARED
-    src/Core.cpp
+    src/RenderComponent.cpp
+    src/CircleRenderComponent.cpp
+    src/Renderer.cpp
 )
 add_library(Simplex::Graphics ALIAS ${PROJECT_NAME})
 
@@ -29,5 +40,5 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ${PROJECT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_BINARY_DIR})
 
-target_link_libraries(${PROJECT_NAME} Simplex::Common)
+target_link_libraries(${PROJECT_NAME} Simplex::Common glfw glad)
 
